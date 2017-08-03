@@ -4,34 +4,87 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="edu.cnm.bootcamp.natedaag.winning.MainActivity">
+    tools:context="edu.cnm.bootcamp.natedaag.winning.activities.MainActivity"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="#  #  #  #  #"
+    <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="#  #  #  #  #"-->
+        <!--tools:layout_editor_absoluteY="248dp"-->
+        <!--tools:layout_editor_absoluteX="160dp" />-->
+
+    <Button
+        android:id="@+id/buttonX1"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="$ Winning!"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="17dp"
+        app:layout_constraintRight_toLeftOf="@+id/databaseButton"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="@+id/databaseButton"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/listView"
+        app:layout_constraintTop_toTopOf="@+id/buttonX5" />
+
+    <Button
+        android:id="@+id/buttonX5"
+        android:layout_width="0dp"
+        android:layout_height="62dp"
+        android:text="$ $ $ $ $ Winning!"
+        android:layout_marginEnd="25dp"
+        android:layout_marginStart="16dp"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.514"
-        app:layout_constraintVertical_bias="0.251"
-        android:layout_marginRight="8dp" />
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintLeft_toRightOf="@+id/databaseButton" />
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="94dp"
-        android:layout_height="51dp"
-        android:text="Winning X1"
-        tools:layout_editor_absoluteX="60dp"
-        tools:layout_editor_absoluteY="403dp" />
+        android:id="@+id/databaseButton"
+        android:layout_width="88dp"
+        android:layout_height="48dp"
+        android:text="DB"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="95dp"
-        android:layout_height="53dp"
-        android:text="Winning X5"
-        tools:layout_editor_absoluteX="230dp"
-        tools:layout_editor_absoluteY="403dp" />
+    <!--<Button-->
+        <!--android:id="@+id/listButton"-->
+        <!--android:text="Query Database"-->
+        <!--android:layout_width="88dp"-->
+        <!--android:layout_height="48dp"-->
+        <!--android:layout_marginBottom="16dp" />-->
+
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="25dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/buttonX1"
+        android:layout_marginEnd="25dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="8dp"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="3dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- android:id="@+id/listView" -->
+
 
 </android.support.constraint.ConstraintLayout>

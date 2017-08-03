@@ -1,6 +1,8 @@
-package edu.cnm.bootcamp.natedaag.winning.Entities;
+package edu.cnm.bootcamp.natedaag.winning.entities;
 
+import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.table.DatabaseTable;
 
 /**
@@ -13,7 +15,7 @@ public class LotteryType {
     @DatabaseField(columnName = "TYPE_ID", generatedId = true)
     private int type_id;
 
-    @DatabaseField(columnName = "NAME", width = 100) // canBeNull = default - don't need to write
+    @DatabaseField(canBeNull = false, columnName = "NAME", width = 100) // canBeNull = default - don't need to write
     private String name;
 
     @DatabaseField(canBeNull = false, columnName = "SIZE_ONE")
@@ -27,6 +29,9 @@ public class LotteryType {
 
     @DatabaseField(columnName = "DRAW_TWO")
     private int drawTwo;
+
+    @ForeignCollectionField(eager = false)
+    private ForeignCollection<Pick> picks;
 
     public LotteryType() {
     }
@@ -76,5 +81,8 @@ public class LotteryType {
         this.drawTwo = drawTwo;
     }
 
-
+    @Override
+    public String toString() {
+        return getName();
+    }
 }

@@ -1,9 +1,7 @@
-package edu.cnm.bootcamp.natedaag.winning.Entities;
+package edu.cnm.bootcamp.natedaag.winning.entities;
 
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
-
-import edu.cnm.bootcamp.natedaag.winning.Entities.Pick;
 
 /**
  * Created by natedaag on 7/26/17.

@@ -1,6 +1,9 @@
-package edu.cnm.bootcamp.natedaag.winning.Entities;
+package edu.cnm.bootcamp.natedaag.winning.entities;
 
+import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.field.DatabaseField;
+import com.j256.ormlite.field.ForeignCollectionField;
+import com.j256.ormlite.field.types.StringBytesType;
 import com.j256.ormlite.table.DatabaseTable;
 
 import java.sql.Timestamp;
@@ -15,7 +18,8 @@ public class Pick {
     @DatabaseField(columnName = "PICK_ID", generatedId = true)
     private int pickId;
 
-    @DatabaseField(columnName = "CREATED", canBeNull = false, readOnly = true)
+    @DatabaseField(columnName = "CREATED", columnDefinition =  "TIMESTAMP DEFAULT CURRENT_TIMESTAMP",
+            format = "yyyy-MM-dd HH:mm:ss", canBeNull = false, readOnly = true)
     private Timestamp created;
 
     @DatabaseField(columnName = "HISTORICAL", canBeNull = false)
@@ -23,6 +27,9 @@ public class Pick {
 
     @DatabaseField(columnName = "TYPE_ID", foreign = true)
     private LotteryType lotteryType;
+
+    @ForeignCollectionField(eager = false)
+    private ForeignCollection<PickValue> values;
 
     public Pick() {
     }
@@ -51,6 +58,14 @@ public class Pick {
         this.lotteryType = lotteryType;
     }
 
-
+    @Override
+    public String toString(){
+        StringBuilder builder = new StringBuilder();
+        for (PickValue value : values) {
+            builder.append(value.getValue());
+            builder.append("    ");
+        }
+        return builder.toString().trim();
+    }
 
 }
