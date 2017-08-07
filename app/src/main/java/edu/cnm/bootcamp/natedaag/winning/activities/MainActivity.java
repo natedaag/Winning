@@ -1,10 +1,14 @@
 
 package edu.cnm.bootcamp.natedaag.winning.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -14,6 +18,7 @@ import com.j256.ormlite.android.apptools.OpenHelperManager;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.List;
 
 import edu.cnm.bootcamp.natedaag.winning.R;
 import edu.cnm.bootcamp.natedaag.winning.helpers.AndroidDatabaseManager;
@@ -36,10 +41,11 @@ public class MainActivity extends AppCompatActivity {
         db.close();
         setContentView(R.layout.activity_main);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.activity_pickview, testArray);
+//        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.activity_pickview, testArray);
+//        listView.setAdapter(adapter);
         ListView listView = (ListView) findViewById(R.id.listView);
-        listView.setAdapter(adapter);
 
+        new FetchNumbersRR(this, listView).execute();
 
         Button databaseButton = (Button)findViewById(R.id.databaseButton);
         databaseButton.setOnClickListener(new View.OnClickListener() {
@@ -69,18 +75,24 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(testIntent3);
             }
         });
-
-//        Button listButton = (Button)findViewById(R.id.listButton);
-//        listButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v3) {
-//                Intent testIntent6 = new Intent(MainActivity.this, Main2Activity.class);
-//                startActivity(testIntent6);
-//            }
-//        });
-
     }
 
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        // Handle item selection
+//        switch (item.getItemId()) {
+//            case R.id.lottery_type_id:
+//                getLotteryTypeId();
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
 
 }
 //ForeignCollection

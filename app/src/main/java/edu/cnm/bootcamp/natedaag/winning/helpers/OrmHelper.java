@@ -15,6 +15,7 @@ import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.DatabaseTable;
 import com.j256.ormlite.table.TableUtils;
 
+import java.util.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,6 +75,7 @@ public class OrmHelper extends OrmLiteSqliteOpenHelper {
 
         Pick pick = new Pick();
         pick.setLotteryType(type);
+        pick.setPicked(new Date(2017, 0,1));
         pick.setHistorical(true);
         getPickDao().create(pick);
 

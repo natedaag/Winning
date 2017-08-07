@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.cnm.bootcamp.natedaag.winning">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -23,6 +23,7 @@
             android:theme="@style/Theme.AppCompat.Light" />
         <activity android:name=".activities.WinningX1Activity" />
         <activity android:name=".activities.Main2Activity" />
+        <activity android:name=".activities.DataEntryActivity"></activity>
     </application>
 
 </manifest>

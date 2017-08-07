@@ -6,6 +6,9 @@ import com.j256.ormlite.field.ForeignCollectionField;
 import com.j256.ormlite.field.types.StringBytesType;
 import com.j256.ormlite.table.DatabaseTable;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.sql.Timestamp;
 
 /**
@@ -22,15 +25,19 @@ public class Pick {
             format = "yyyy-MM-dd HH:mm:ss", canBeNull = false, readOnly = true)
     private Timestamp created;
 
+    @DatabaseField(columnName = "PICKED", format = "yyyy-MM-dd", canBeNull = false, uniqueCombo = true)
+    private Date picked;
+
     @DatabaseField(columnName = "HISTORICAL", canBeNull = false)
     private boolean historical;
 
-    @DatabaseField(columnName = "TYPE_ID", foreign = true)
+    @DatabaseField(columnName = "TYPE_ID", foreign = true, uniqueCombo = true, foreignAutoRefresh = true)
     private LotteryType lotteryType;
 
-    @ForeignCollectionField(eager = false)
+    @ForeignCollectionField(eager = false, orderColumnName = "VALUE")
     private ForeignCollection<PickValue> values;
 
+    // TODO Add unique constraint for LotteryType id and Picked Date.
     public Pick() {
     }
 
@@ -40,6 +47,14 @@ public class Pick {
 
     public Timestamp getCreated() {
         return created;
+    }
+
+    public Date getPicked() {
+        return picked;
+    }
+
+    public void setPicked(Date picked) {
+        this.picked = picked;
     }
 
     public boolean isHistorical() {
@@ -61,6 +76,9 @@ public class Pick {
     @Override
     public String toString(){
         StringBuilder builder = new StringBuilder();
+        DateFormat format = new SimpleDateFormat("MM/dd/yy");
+        builder.append(format.format(getPicked()));
+        builder.append("     ");
         for (PickValue value : values) {
             builder.append(value.getValue());
             builder.append("    ");
