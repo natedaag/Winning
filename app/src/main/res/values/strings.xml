@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Winning</string>
+    <string name="app_name">WINNING!</string>
     <string name="roadrunner_url">http://nmlotterydynamic.sks.com/rts/games/pastdrawings/csv/?game=roadrunnercash</string>
     <string name="powerball_url">http://www.powerball.com/powerball/winnums-text.txt</string>
 </resources>

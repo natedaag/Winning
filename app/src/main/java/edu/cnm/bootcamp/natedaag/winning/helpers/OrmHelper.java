@@ -55,7 +55,7 @@ public class OrmHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTable(connectionSource, PickValue.class);
             TableUtils.createTable(connectionSource, LotteryType.class);
             populateDb();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             Log.e(OrmHelper.class.getName(), "Can't create database", e);
             throw new RuntimeException(e);
         }

@@ -1,5 +1,7 @@
 package edu.cnm.bootcamp.natedaag.winning.entities;
 
+import android.support.annotation.NonNull;
+
 import com.j256.ormlite.field.DatabaseField;
 import com.j256.ormlite.table.DatabaseTable;
 
@@ -8,7 +10,7 @@ import com.j256.ormlite.table.DatabaseTable;
  */
 
 @DatabaseTable(tableName = "PICKVALUE")
-public class PickValue {
+public class PickValue implements Comparable<PickValue> {
 
     @DatabaseField(columnName = "VALUE_ID", generatedId = true)
     private int valueId;
@@ -53,5 +55,12 @@ public class PickValue {
         this.sequence = sequence;
     }
 
-
+    @Override
+    public int compareTo(@NonNull PickValue other) {
+        int comparison = Integer.compare(getSequence(), other.getSequence());
+        if (comparison == 0) {
+            comparison = Integer.compare(getValue(), other.getValue());
+        }
+        return comparison;
+    }
 }

@@ -1,7 +1,6 @@
 
 package edu.cnm.bootcamp.natedaag.winning.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
@@ -16,10 +15,6 @@ import android.widget.ListView;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.List;
-
 import edu.cnm.bootcamp.natedaag.winning.R;
 import edu.cnm.bootcamp.natedaag.winning.helpers.AndroidDatabaseManager;
 import edu.cnm.bootcamp.natedaag.winning.helpers.OrmHelper;
@@ -28,9 +23,21 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String PICKSIZE = "edu.cnm.bootcamp.natedaag.winning.activities.picksize";
 
-    String[] testArray = {"a", "b", "c", "d", "e"};
-
     private ArrayAdapter<String> listAdapter = null;
+
+    private OrmHelper helper = null;
+
+    private OrmHelper getHelper() {
+        if (helper == null) {
+            helper = OpenHelperManager.getHelper(this, OrmHelper.class);
+        }
+        return helper;
+    }
+
+    private void releaseHelper() {
+        OpenHelperManager.releaseHelper();
+        helper = null;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,22 +84,35 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        releaseHelper();
+        super.onDestroy();
+    }
+
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu, menu);
+        inflater.inflate(R.menu.lottery_type_menu, menu);
         return true;
     }
 
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle item selection
-//        switch (item.getItemId()) {
-//            case R.id.lottery_type_id:
-//                getLotteryTypeId();
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.lottery_type_id:
+                ListView listView = (ListView) findViewById(R.id.listView);
+              new FetchNumbersPB(this, listView).execute();
+                return true;
+
+            case R.id.lottery_type_id2:
+                ListView listView2 = (ListView) findViewById(R.id.listView);
+                new FetchNumbersRR(this, listView2).execute();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
 }
 //ForeignCollection

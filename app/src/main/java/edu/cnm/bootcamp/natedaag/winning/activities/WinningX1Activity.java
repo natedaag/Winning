@@ -69,4 +69,19 @@ public class WinningX1Activity extends AppCompatActivity {
         }
         return results;
     }
+
+    private String[] generateBogusDataPB(int count) {
+        String[] results = new String[count];
+        for (int i = 0; i < count; i++) {
+            StringBuilder builder = new StringBuilder();
+            for (int j = 0; j < 5; j++) {
+                builder.append(Math.round(1 + 69 * Math.random()));
+                builder.append("          ");
+            }
+            results[i] = builder.toString().trim();
+        }
+        return results;
+    }
+
+
 }

@@ -8,6 +8,9 @@ import com.j256.ormlite.table.DatabaseTable;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.sql.Timestamp;
 
@@ -79,7 +82,9 @@ public class Pick {
         DateFormat format = new SimpleDateFormat("MM/dd/yy");
         builder.append(format.format(getPicked()));
         builder.append("     ");
-        for (PickValue value : values) {
+        ArrayList<PickValue> sorted = new ArrayList<>(values);
+        Collections.sort(sorted);
+        for (PickValue value : sorted) {
             builder.append(value.getValue());
             builder.append("    ");
         }
