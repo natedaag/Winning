@@ -33,6 +33,7 @@ import edu.cnm.bootcamp.natedaag.winning.entities.LotteryType;
 import edu.cnm.bootcamp.natedaag.winning.entities.Pick;
 import edu.cnm.bootcamp.natedaag.winning.entities.PickValue;
 import edu.cnm.bootcamp.natedaag.winning.helpers.OrmHelper;
+import edu.cnm.bootcamp.natedaag.winning.helpers.PickAdapter;
 
 /**
  * Created by natedaag on 8/2/17.
@@ -89,7 +90,8 @@ public class FetchNumbersRR extends AsyncTask<Void, Void, List<Pick>> {
 
     @Override
     protected void onPostExecute(List<Pick> picks) {
-        ArrayAdapter<Pick> adapter = new ArrayAdapter<>(context, R.layout.activity_pickview, picks);
+//        ArrayAdapter<Pick> adapter = new ArrayAdapter<>(context, R.layout.activity_pickview, picks);
+        PickAdapter adapter = new PickAdapter(context, picks);
         listView.setAdapter(adapter);
     }
 

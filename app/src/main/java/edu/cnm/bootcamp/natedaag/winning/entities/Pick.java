@@ -76,17 +76,23 @@ public class Pick {
         this.lotteryType = lotteryType;
     }
 
+    public ForeignCollection<PickValue> getValues() {
+        return values;
+    }
+
     @Override
     public String toString(){
         StringBuilder builder = new StringBuilder();
         DateFormat format = new SimpleDateFormat("MM/dd/yy");
         builder.append(format.format(getPicked()));
         builder.append("     ");
-        ArrayList<PickValue> sorted = new ArrayList<>(values);
-        Collections.sort(sorted);
-        for (PickValue value : sorted) {
-            builder.append(value.getValue());
-            builder.append("    ");
+        if (getValues() != null) {
+            ArrayList<PickValue> sorted = new ArrayList<>(getValues());
+            Collections.sort(sorted);
+            for (PickValue value : sorted) {
+                builder.append(value.getValue());
+                builder.append("    ");
+            }
         }
         return builder.toString().trim();
     }
