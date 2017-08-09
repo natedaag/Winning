@@ -2,14 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/lottery_type_id"
-        android:title="PowerBall"
-        app:showAsAction="collapseActionView" />
+    <group>
     <item
         android:id="@+id/lottery_type_id2"
         android:title="RoadRunner"
         app:showAsAction="collapseActionView" />
+    <item
+        android:id="@+id/lottery_type_id"
+        android:title="PowerBall"
+        app:showAsAction="collapseActionView" />
+    </group>
+    <item
+        android:id="@+id/settings_id"
+        android:title="Settings"
+        app:showAsAction="collapseActionView" />
+
 
 </menu>
 

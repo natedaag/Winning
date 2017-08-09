@@ -104,10 +104,11 @@ public class OrmHelper extends OrmLiteSqliteOpenHelper {
         value.setValue(6);
         getPickValueDao().create(value);
 
+        type = new LotteryType();
         type.setName("PowerBall");
-        getLotteryTypeDao().create(type);
-        type.setSizeTwo(69);
-        type.setDrawTwo(5);
+        type.setSizeOne(69);
+        type.setDrawOne(5);
+        type.setSizeTwo(26);
         type.setDrawTwo(1);
         getLotteryTypeDao().create(type);
 

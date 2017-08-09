@@ -13,7 +13,7 @@ import com.j256.ormlite.table.DatabaseTable;
 public class LotteryType {
 
     @DatabaseField(columnName = "TYPE_ID", generatedId = true)
-    private int type_id;
+    private int id;
 
     @DatabaseField(canBeNull = false, columnName = "NAME", width = 100) // canBeNull = default - don't need to write
     private String name;
@@ -24,10 +24,10 @@ public class LotteryType {
     @DatabaseField(canBeNull = false, columnName = "DRAW_ONE")
     private int drawOne;
 
-    @DatabaseField(columnName = "SIZE_TWO")
+    @DatabaseField(columnName = "SIZE_TWO", defaultValue = "0")
     private int sizeTwo;
 
-    @DatabaseField(columnName = "DRAW_TWO")
+    @DatabaseField(columnName = "DRAW_TWO", defaultValue = "0")
     private int drawTwo;
 
     @ForeignCollectionField(eager = false)
@@ -37,8 +37,8 @@ public class LotteryType {
     }
 
 
-    public int getType_id() {
-        return type_id;
+    public int getId() {
+        return id;
     }
 
     public String getName() {

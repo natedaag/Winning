@@ -14,14 +14,22 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.QueryBuilder;
+
+import java.sql.SQLException;
 
 import edu.cnm.bootcamp.natedaag.winning.R;
+import edu.cnm.bootcamp.natedaag.winning.entities.LotteryType;
 import edu.cnm.bootcamp.natedaag.winning.helpers.AndroidDatabaseManager;
 import edu.cnm.bootcamp.natedaag.winning.helpers.OrmHelper;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String PICKSIZE = "edu.cnm.bootcamp.natedaag.winning.activities.picksize";
+    private LotteryType type = null;
+
+    public static final String LOTTERY_TYPE_ID = "edu.cnm.bootcamp.natedaag.winning.entities.LotteryType.id";
+    public static final String PICKSIZE = "edu.cnm.bootcamp.natedaag.winning.activities.MainActivity.pickSize";
 
     private ArrayAdapter<String> listAdapter = null;
 
@@ -48,9 +56,19 @@ public class MainActivity extends AppCompatActivity {
         db.close();
         setContentView(R.layout.activity_main);
 
-//        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.activity_pickview, testArray);
-//        listView.setAdapter(adapter);
+//    ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.activity_pickview, testArray);
+//    listView.setAdapter(adapter);
         ListView listView = (ListView) findViewById(R.id.listView);
+
+        try {
+            Dao<LotteryType, Integer> dao = getHelper().getLotteryTypeDao();
+            QueryBuilder<LotteryType, Integer> builder = dao.queryBuilder();
+            builder.where().eq("NAME", "RoadRunner");
+            type = dao.queryForFirst(builder.prepare());
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
 
         new FetchNumbersRR(this, listView).execute();
 
@@ -68,7 +86,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v3) {
                 Intent testIntent3 = new Intent(MainActivity.this, WinningX1Activity.class)
-                        .putExtra(PICKSIZE, 1);
+                        .putExtra(PICKSIZE, 1)
+                        .putExtra(LOTTERY_TYPE_ID, type.getId());
                 startActivity(testIntent3);
             }
         });
@@ -78,7 +97,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v3) {
                 Intent testIntent3 = new Intent(MainActivity.this, WinningX1Activity.class)
-                        .putExtra(PICKSIZE, 5);
+                        .putExtra(PICKSIZE, 5)
+                        .putExtra(LOTTERY_TYPE_ID, type.getId());
                 startActivity(testIntent3);
             }
         });
@@ -102,12 +122,30 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.lottery_type_id:
                 ListView listView = (ListView) findViewById(R.id.listView);
-              new FetchNumbersPB(this, listView).execute();
+                new FetchNumbersPB(this, listView).execute();
+                try {
+                    Dao<LotteryType, Integer> dao = getHelper().getLotteryTypeDao();
+                    QueryBuilder<LotteryType, Integer> builder = dao.queryBuilder();
+                    builder.where().eq("NAME", item.getTitle());
+                    type = dao.queryForFirst(builder.prepare());
+
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
                 return true;
 
             case R.id.lottery_type_id2:
                 ListView listView2 = (ListView) findViewById(R.id.listView);
                 new FetchNumbersRR(this, listView2).execute();
+                try {
+                    Dao<LotteryType, Integer> dao = getHelper().getLotteryTypeDao();
+                    QueryBuilder<LotteryType, Integer> builder = dao.queryBuilder();
+                    builder.where().eq("NAME", item.getTitle());
+                    type = dao.queryForFirst(builder.prepare());
+
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
