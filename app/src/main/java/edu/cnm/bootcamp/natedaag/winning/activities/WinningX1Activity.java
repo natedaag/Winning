@@ -1,5 +1,6 @@
 package edu.cnm.bootcamp.natedaag.winning.activities;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.ListView;
 
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.ForeignCollection;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.j256.ormlite.stmt.query.In;
 
@@ -25,12 +27,14 @@ import edu.cnm.bootcamp.natedaag.winning.entities.LotteryType;
 import edu.cnm.bootcamp.natedaag.winning.entities.Pick;
 import edu.cnm.bootcamp.natedaag.winning.entities.PickValue;
 import edu.cnm.bootcamp.natedaag.winning.helpers.OrmHelper;
+import edu.cnm.bootcamp.natedaag.winning.helpers.PickAdapter;
 
 public class WinningX1Activity extends AppCompatActivity {
 
+
     private static Random rng = new SecureRandom();
 
-    private ArrayAdapter<String> listAdapter = null;
+    private PickAdapter listAdapter = null;
 
     int pickSize;
     LotteryType type = null;
@@ -77,28 +81,34 @@ public class WinningX1Activity extends AppCompatActivity {
         clearX1Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadList(new String[]{}, false);
+                loadList(new ArrayList<Pick>(), false);
             }
         });
     }
 
-    private void loadList(String[] data, boolean append) {
+    private void loadList(List<Pick> data, boolean append) {
         if (listAdapter == null) {
-            listAdapter = new ArrayAdapter<>(this, R.layout.activity_pickview);
-        }
-        if (!append) {
+            listAdapter = new PickAdapter(this, R.layout.generate_layout, data);
+        } else if (!append) {
             listAdapter.clear();
+            listAdapter.addAll(data);
+        } else {
+            listAdapter.addAll(data);
         }
-        listAdapter.addAll(data);
         ListView listView = (ListView) findViewById(R.id.listView2);
         listView.setAdapter(listAdapter);
     }
 
-    private String[] generateData(LotteryType type, int count) {
-        String[] results = new String[count];
+    private List<Pick> generateData(LotteryType type, int count) {
         List<Integer> poolOne = getWeightedPool(type, (type.getSizeTwo() > 0) ? 1 : 0);
         List<Integer> poolTwo = (type.getSizeTwo() > 0) ? getWeightedPool(type, 2) : new ArrayList<Integer>();
+
+        ArrayList<Pick> picks = new ArrayList<>();
+
         for (int i = 0; i < count; i++) {
+            Pick pick = new Pick();
+            pick.setLotteryType(type);
+            pick.setNewValues(new ArrayList<PickValue>());
             Collections.shuffle(poolOne, rng);
             List<Integer> drawOne = new ArrayList<>();
             int position = 0;
@@ -106,32 +116,35 @@ public class WinningX1Activity extends AppCompatActivity {
                 Integer draw = poolOne.get(position++);
                 if (!drawOne.contains(draw)) {
                     drawOne.add(draw);
+                    PickValue value = new PickValue();
+                    value.setPick(pick);
+                    value.setValue(draw);
+                    value.setSequence((type.getDrawTwo() > 0) ? 1 : 0);
+                    pick.getNewValues().add(value);
                 }
             }
-            Collections.sort(drawOne);
-            StringBuilder builder = new StringBuilder();
-            for (int j : drawOne) {
-                builder.append(j);
-                builder.append("          ");
-            }
-            Collections.shuffle(poolTwo);
+
+
+              Collections.shuffle(poolTwo);
             List<Integer> drawTwo = new ArrayList<>();
             position = 0;
             while (drawTwo.size() < type.getDrawTwo()) {
                 Integer draw = poolTwo.get(position++);
                 if (!drawTwo.contains(draw)) {
                     drawTwo.add(draw);
+                    PickValue value = new PickValue();
+                    value.setPick(pick);
+                    value.setValue(draw);
+                    value.setSequence(2);
+                    pick.getNewValues().add(value);
+
                 }
             }
-            Collections.sort(drawTwo);
-            for (int j : drawTwo) {
-                builder.append(j);
-                builder.append("          ");
-            }
-            results [i] = builder.toString().trim();
+            picks.add(pick);
+
         }
 
-        return results;
+        return picks;
     }
 
     private List<Integer> getWeightedPool(LotteryType type, int sequence) {

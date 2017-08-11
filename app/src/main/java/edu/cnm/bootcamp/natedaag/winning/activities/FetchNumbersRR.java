@@ -66,7 +66,7 @@ public class FetchNumbersRR extends AsyncTask<Void, Void, List<Pick>> {
             InputStream input = connection.getInputStream();
             ByteArrayOutputStream output = new ByteArrayOutputStream();
             if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                // TODO - Displsy useful alert to user - e.g. "No network connection"
+                // TODO - Display useful alert to user - e.g. "No network connection"
                 throw new IOException(connection.getResponseMessage());
             }
             byte[] buffer = new byte[BUFFER_SIZE];
@@ -90,13 +90,11 @@ public class FetchNumbersRR extends AsyncTask<Void, Void, List<Pick>> {
 
     @Override
     protected void onPostExecute(List<Pick> picks) {
-//        ArrayAdapter<Pick> adapter = new ArrayAdapter<>(context, R.layout.activity_pickview, picks);
-        PickAdapter adapter = new PickAdapter(context, picks);
+        PickAdapter adapter = new PickAdapter(context, R.layout.pick_layout, picks);
         listView.setAdapter(adapter);
     }
 
     private void updatePicks(byte[] data) throws IOException {
-        //       List<String>  strings = new ArrayList<>();
         try (
                 ByteArrayInputStream stream = new ByteArrayInputStream(data);
                 InputStreamReader input = new InputStreamReader(stream);
@@ -107,7 +105,7 @@ public class FetchNumbersRR extends AsyncTask<Void, Void, List<Pick>> {
             Dao<Pick, Integer> pickDao = null;
             Dao<PickValue, Integer> valueDao = null;
             try {
-                helper = OpenHelperManager.getHelper(this.context, OrmHelper.class);
+                helper = ((MainActivity) context).getHelper();
                 Dao<LotteryType, Integer> typeDao = helper.getLotteryTypeDao();
                 QueryBuilder builder = typeDao.queryBuilder();
                 builder.where().eq("NAME", "RoadRunner");
@@ -122,8 +120,6 @@ public class FetchNumbersRR extends AsyncTask<Void, Void, List<Pick>> {
                 String row = "";
                 if (columns.length > 2) {
                     try {
-                        //TODO write date with historical picks - updates db
-                        //TODO store them in database
                         Pick pick = new Pick();
                         pick.setLotteryType(type);
                         pick.setHistorical(true);
@@ -158,7 +154,7 @@ public class FetchNumbersRR extends AsyncTask<Void, Void, List<Pick>> {
         OrmHelper helper = null;
 //           LotteryType type = null;
         try {
-            helper = OpenHelperManager.getHelper(this.context, OrmHelper.class);
+            helper = ((MainActivity) context).getHelper();
             Dao<LotteryType, Integer> typeDao = helper.getLotteryTypeDao();
             Dao<Pick,Integer> pickDao = helper.getPickDao();
             QueryBuilder<LotteryType, Integer> typeBuilder = typeDao.queryBuilder();

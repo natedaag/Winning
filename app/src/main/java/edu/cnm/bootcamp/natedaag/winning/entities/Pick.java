@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
  * Created by natedaag on 7/26/17.
@@ -39,6 +40,16 @@ public class Pick {
 
     @ForeignCollectionField(eager = false, orderColumnName = "VALUE")
     private ForeignCollection<PickValue> values;
+
+    public List<PickValue> getNewValues() {
+        return newValues;
+    }
+
+    public void setNewValues(List<PickValue> newValues) {
+        this.newValues = newValues;
+    }
+
+    private List<PickValue> newValues = null;
 
     // TODO Add unique constraint for LotteryType id and Picked Date.
     public Pick() {

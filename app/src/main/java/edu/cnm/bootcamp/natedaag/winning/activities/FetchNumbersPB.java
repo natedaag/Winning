@@ -33,6 +33,7 @@ import edu.cnm.bootcamp.natedaag.winning.entities.LotteryType;
 import edu.cnm.bootcamp.natedaag.winning.entities.Pick;
 import edu.cnm.bootcamp.natedaag.winning.entities.PickValue;
 import edu.cnm.bootcamp.natedaag.winning.helpers.OrmHelper;
+import edu.cnm.bootcamp.natedaag.winning.helpers.PickAdapter;
 
 /**
  * Created by natedaag on 8/2/17.
@@ -89,9 +90,10 @@ public class FetchNumbersPB extends AsyncTask<Void, Void, List<Pick>> {
 
     @Override
     protected void onPostExecute(List<Pick> picks) {
-        ArrayAdapter<Pick> adapter = new ArrayAdapter<>(context, R.layout.activity_pickview, picks);
+        PickAdapter adapter = new PickAdapter(context, R.layout.pick_layout, picks);
         listView.setAdapter(adapter);
     }
+
 
     private void updatePicks(byte[] data) throws IOException {
         //       List<String>  strings = new ArrayList<>();
@@ -105,7 +107,7 @@ public class FetchNumbersPB extends AsyncTask<Void, Void, List<Pick>> {
             Dao<Pick, Integer> pickDao = null;
             Dao<PickValue, Integer> valueDao = null;
             try {
-                helper = OpenHelperManager.getHelper(this.context, OrmHelper.class);
+                helper = ((MainActivity) context).getHelper();
                 Dao<LotteryType, Integer> typeDao = helper.getLotteryTypeDao();
                 QueryBuilder builder = typeDao.queryBuilder();
                 builder.where().eq("NAME", "PowerBall");
@@ -166,7 +168,7 @@ public class FetchNumbersPB extends AsyncTask<Void, Void, List<Pick>> {
         OrmHelper helper = null;
 //           LotteryType type = null;
         try {
-            helper = OpenHelperManager.getHelper(this.context, OrmHelper.class);
+            helper = ((MainActivity) context).getHelper();
             Dao<LotteryType, Integer> typeDao = helper.getLotteryTypeDao();
             Dao<Pick, Integer> pickDao = helper.getPickDao();
             QueryBuilder<LotteryType, Integer> typeBuilder = typeDao.queryBuilder();

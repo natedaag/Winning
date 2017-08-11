@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,6 +24,7 @@ import edu.cnm.bootcamp.natedaag.winning.R;
 import edu.cnm.bootcamp.natedaag.winning.entities.LotteryType;
 import edu.cnm.bootcamp.natedaag.winning.helpers.AndroidDatabaseManager;
 import edu.cnm.bootcamp.natedaag.winning.helpers.OrmHelper;
+import edu.cnm.bootcamp.natedaag.winning.helpers.PickAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,25 +37,27 @@ public class MainActivity extends AppCompatActivity {
 
     private OrmHelper helper = null;
 
-    private OrmHelper getHelper() {
+    public OrmHelper getHelper() {
+        Log.d("database debug", "getHelper: " + helper);
         if (helper == null) {
             helper = OpenHelperManager.getHelper(this, OrmHelper.class);
         }
         return helper;
     }
 
-    private void releaseHelper() {
-        OpenHelperManager.releaseHelper();
-        helper = null;
+    public void releaseHelper() {
+        Log.d("database debug", "releaseHelper: " + helper);
+        if (helper != null) {
+            OpenHelperManager.releaseHelper();
+            helper = null;
+        }
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        OrmHelper ormHelper = OpenHelperManager.getHelper(this, OrmHelper.class);
-        SQLiteDatabase db = ormHelper.getWritableDatabase();
-        db.close();
+        Log.d("database debug", "onCreate");
+        getHelper().getWritableDatabase().close();
         setContentView(R.layout.activity_main);
 
 //    ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.activity_pickview, testArray);
@@ -105,9 +109,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
+    protected void onStart() {
+        super.onStart();
+        getHelper();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
         releaseHelper();
-        super.onDestroy();
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
