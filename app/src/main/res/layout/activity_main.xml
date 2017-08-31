@@ -29,24 +29,25 @@
         />
 
     <Button
-        android:id="@+id/buttonX1"
         style="@style/Widget.AppCompat.Button"
+        android:id="@+id/buttonX1"
         android:layout_width="102dp"
         android:layout_height="59dp"
         android:layout_marginEnd="17dp"
         android:textSize="22sp"
         android:text="$"
-        tools:layout_editor_absoluteY="436dp"
-        tools:layout_editor_absoluteX="25dp"
-        app:layout_constraintBottom_toBottomOf="@+id/databaseButton"
-        app:layout_constraintRight_toLeftOf="@+id/databaseButton"
-        app:layout_constraintTop_toTopOf="@+id/buttonX5"
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintTop_creator="1"
-        android:layout_marginRight="25dp"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintTop_toTopOf="@+id/buttonX5"
+        android:layout_marginTop="15dp"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonX5"
+        app:layout_constraintRight_toLeftOf="@+id/databaseButton"
+        android:layout_marginRight="133dp"
+        app:layout_constraintVertical_bias="1.0"
         />
+    <!--app:layout_constraintRight_toLeftOf="@+id/databaseButton"-->
+
 
     <Button
         android:id="@+id/buttonX5"
@@ -61,11 +62,13 @@
         app:layout_constraintRight_toRightOf="parent"
         tools:layout_constraintLeft_creator="1"
         android:layout_marginBottom="16dp"
-        app:layout_constraintLeft_toRightOf="@+id/databaseButton"
         tools:layout_editor_absoluteY="436dp"
         tools:layout_editor_absoluteX="251dp"
         app:layout_constraintHorizontal_bias="0.39"
+        app:layout_constraintLeft_toRightOf="@+id/databaseButton"
         />
+    <!--move into body if db button is reinstalled.  app:layout_constraintLeft_toRightOf="@+id/databaseButton"-->
+
 
     <Button
         android:id="@+id/databaseButton"
@@ -79,6 +82,7 @@
         tools:layout_constraintLeft_creator="1"
         android:layout_marginBottom="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
+        android:visibility="invisible"
         />
 
 </android.support.constraint.ConstraintLayout>
