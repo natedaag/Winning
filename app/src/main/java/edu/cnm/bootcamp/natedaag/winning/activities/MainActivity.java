@@ -76,6 +76,9 @@ public class MainActivity extends AppCompatActivity {
 
         new FetchNumbersRR(this, listView).execute();
 
+        setTitle(String.format("Winning %s!", "RoadRunner"));
+
+
         Button databaseButton = (Button)findViewById(R.id.databaseButton);
         databaseButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
+                setTitle(String.format("Winning %s!", item.getTitle()));
                 return true;
 
             case R.id.lottery_type_id2:
@@ -156,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
+                setTitle(String.format("Winning %s!", item.getTitle()));
                 return true;
 // added for MM
             case R.id.lottery_type_id3:
@@ -170,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
+                setTitle(String.format("Winning %s!", item.getTitle()));
                 return true;
 
             default:
@@ -178,4 +184,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
 }
-//ForeignCollection
+

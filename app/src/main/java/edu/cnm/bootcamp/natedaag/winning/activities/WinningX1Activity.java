@@ -49,8 +49,10 @@ public class WinningX1Activity extends AppCompatActivity {
     }
 
     private void releaseHelper() {
-        OpenHelperManager.releaseHelper();
-        helper = null;
+        if(helper != null) {
+            OpenHelperManager.releaseHelper();
+            helper = null;
+        }
     }
 
     @Override
@@ -179,4 +181,17 @@ public class WinningX1Activity extends AppCompatActivity {
             throw new RuntimeException(ex);
         }
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getHelper();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        releaseHelper();
+    }
+
 }
