@@ -157,6 +157,21 @@ public class MainActivity extends AppCompatActivity {
                     ex.printStackTrace();
                 }
                 return true;
+// added for MM
+            case R.id.lottery_type_id3:
+                ListView listView3 = (ListView) findViewById(R.id.listView);
+                new FetchNumbersMM(this, listView3).execute();
+                try {
+                    Dao<LotteryType, Integer> dao = getHelper().getLotteryTypeDao();
+                    QueryBuilder<LotteryType, Integer> builder = dao.queryBuilder();
+                    builder.where().eq("NAME", item.getTitle());
+                    type = dao.queryForFirst(builder.prepare());
+
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -13,8 +13,8 @@
         app:showAsAction="collapseActionView" />
     </group>
     <item
-        android:id="@+id/settings_id"
-        android:title="Settings"
+        android:id="@+id/lottery_type_id3"
+        android:title="MegaMillions"
         app:showAsAction="collapseActionView" />
 
 
