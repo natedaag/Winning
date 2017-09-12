@@ -73,37 +73,6 @@ public class OrmHelper extends OrmLiteSqliteOpenHelper {
         type.setDrawOne(5);
         getLotteryTypeDao().create(type);
 
-        Pick pick = new Pick();
-        pick.setLotteryType(type);
-        pick.setPicked(new Date(2017, 0,1));
-        pick.setHistorical(true);
-        getPickDao().create(pick);
-
-        PickValue value = new PickValue();
-        value.setPick(pick);
-        value.setValue(17);
-        getPickValueDao().create(value);
-
-        value = new PickValue();
-        value.setPick(pick);
-        value.setValue(35);
-        getPickValueDao().create(value);
-
-        value = new PickValue();
-        value.setPick(pick);
-        value.setValue(7);
-        getPickValueDao().create(value);
-
-        value = new PickValue();
-        value.setPick(pick);
-        value.setValue(27);
-        getPickValueDao().create(value);
-
-        value = new PickValue();
-        value.setPick(pick);
-        value.setValue(6);
-        getPickValueDao().create(value);
-
         type = new LotteryType();
         type.setName("PowerBall");
         type.setSizeOne(69);
@@ -111,6 +80,15 @@ public class OrmHelper extends OrmLiteSqliteOpenHelper {
         type.setSizeTwo(26);
         type.setDrawTwo(1);
         getLotteryTypeDao().create(type);
+
+        type = new LotteryType();
+        type.setName("MegaMillions");
+        type.setSizeOne(75);
+        type.setDrawOne(5);
+        type.setSizeTwo(15);
+        type.setDrawTwo(1);
+        getLotteryTypeDao().create(type);
+
 
     }
 

@@ -24,6 +24,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -106,9 +107,11 @@ public class FetchNumbersPB extends AsyncTask<Void, Void, List<Pick>> {
             LotteryType type = null;
             Dao<Pick, Integer> pickDao = null;
             Dao<PickValue, Integer> valueDao = null;
+            Dao<LotteryType, Integer> typeDao = null;
+
             try {
                 helper = ((MainActivity) context).getHelper();
-                Dao<LotteryType, Integer> typeDao = helper.getLotteryTypeDao();
+                typeDao = helper.getLotteryTypeDao();
                 QueryBuilder builder = typeDao.queryBuilder();
                 builder.where().eq("NAME", "PowerBall");
                 type = typeDao.queryForFirst(builder.prepare());
@@ -160,6 +163,21 @@ public class FetchNumbersPB extends AsyncTask<Void, Void, List<Pick>> {
                     }
                 }
             }
+
+            try {
+                QueryBuilder typeQb = typeDao.queryBuilder();
+                typeQb.where().eq("NAME", "PowerBall");
+                QueryBuilder<Pick, Integer> qb = pickDao.queryBuilder();
+                Calendar cutOff = Calendar.getInstance();
+                cutOff.add(Calendar.MONTH, - 3);
+                qb.join(typeQb);
+
+                qb.where().lt("PICKED", cutOff.getTime());
+                pickDao.delete(qb.query());
+            } catch (SQLException ex) {
+                // ignore
+            }
+
         }
     }
 

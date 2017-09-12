@@ -19,13 +19,12 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Calendar;
-import java.util.Date;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -41,18 +40,17 @@ import edu.cnm.bootcamp.natedaag.winning.helpers.PickAdapter;
  * Created by natedaag on 8/2/17.
  */
 
-public class FetchNumbersRR extends AsyncTask<Void, Void, List<Pick>> {
+public class FetchNumbersMM extends AsyncTask<Void, Void, List<Pick>> {
 
-    private static int BUFFER_SIZE = 4096;
-    private static int LOTTERY_TYPE_COLUMN = 0;
-    private static int DATE_COLUMN = 1;
-    private static int FIRST_PICK_VALUE_COLUMN = 2;
+    private static final int BUFFER_SIZE = 4096;
+    private static final int DATE_COLUMN = 0;
+    private static final int FIRST_PICK_VALUE_COLUMN = 1;
+    private static final int MAX_DAYS = 35;
 
     private Context context;
-
     private ListView listView;
 
-    public FetchNumbersRR(Context context, ListView listView) {
+    public FetchNumbersMM(Context context, ListView listView) {
         super();
         this.context = context;
         this.listView = listView;
@@ -63,12 +61,11 @@ public class FetchNumbersRR extends AsyncTask<Void, Void, List<Pick>> {
         List<String> rows = null;
         HttpURLConnection connection = null;
         try {
-            URL url = new URL(context.getString(R.string.roadrunner_url));
+            URL url = new URL(context.getString(R.string.megamillions_url));
             connection = (HttpURLConnection) url.openConnection();
             InputStream input = connection.getInputStream();
             ByteArrayOutputStream output = new ByteArrayOutputStream();
             if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                // TODO - Display useful alert to user - e.g. "No network connection"
                 throw new IOException(connection.getResponseMessage());
             }
             byte[] buffer = new byte[BUFFER_SIZE];
@@ -96,12 +93,13 @@ public class FetchNumbersRR extends AsyncTask<Void, Void, List<Pick>> {
         listView.setAdapter(adapter);
     }
 
+
     private void updatePicks(byte[] data) throws IOException {
+        //       List<String>  strings = new ArrayList<>();
         try (
                 ByteArrayInputStream stream = new ByteArrayInputStream(data);
                 InputStreamReader input = new InputStreamReader(stream);
                 BufferedReader reader = new BufferedReader(input);
-
         ) {
             OrmHelper helper = null;
             LotteryType type = null;
@@ -112,33 +110,43 @@ public class FetchNumbersRR extends AsyncTask<Void, Void, List<Pick>> {
                 helper = ((MainActivity) context).getHelper();
                 typeDao = helper.getLotteryTypeDao();
                 QueryBuilder builder = typeDao.queryBuilder();
-                builder.where().eq("NAME", "RoadRunner");
+                builder.where().eq("NAME", "MegaMillions");
                 type = typeDao.queryForFirst(builder.prepare());
             } catch (SQLException ex) {
                 ex.printStackTrace();
                 throw new RuntimeException(ex);
             }
-            String line = reader.readLine();                            // eat header line
-            while ((line = reader.readLine()) != null) {
-                String[] columns = line.split("\\s*,\\s*");
-                String row = "";
+            int counter = 0;
+            String line = reader.readLine();                        // eat header line
+            while ((line = reader.readLine()) != null && counter++ < MAX_DAYS) {
+                line = line.replaceAll("^\\s*\"\\s*|\\s*\"\\s*$", "");
+                String[] columns = line.split("\\s*\"\\s*,\\s*\"\\s*|\\s+");
                 if (columns.length > 2) {
+
                     try {
                         Pick pick = new Pick();
                         pick.setLotteryType(type);
                         pick.setHistorical(true);
-                        pick.setPicked(new SimpleDateFormat("MM/dd/yyyy").parse(columns[1]));
+                        pick.setPicked(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss").parse(columns[0]));
                         pickDao = helper.getPickDao();
                         pickDao.create(pick);
                         valueDao = helper.getPickValueDao();
-                        for (int i = 2; i < columns.length; ++i) {
-                            //                     row += columns[i] + "          ";
+// to get white balls
+                        for (int i = 3; i < columns.length; ++i) {
                             PickValue value = new PickValue();
                             value.setPick(pick);
                             value.setValue(Integer.parseInt(columns[i]));
+                            value.setSequence(1);
                             valueDao.create(value);
                         }
-                        //                       strings.add(row);
+// to get megaballs
+                        PickValue value = new PickValue();
+                        value.setPick(pick);
+                        value.setValue(Integer.parseInt(columns[1]));
+                        value.setSequence(2);
+                        valueDao.create(value);
+
+
                     } catch (ParseException ex) {
                         ex.printStackTrace();
                     } catch (NumberFormatException ex) {
@@ -150,12 +158,13 @@ public class FetchNumbersRR extends AsyncTask<Void, Void, List<Pick>> {
                     }
                 }
             }
+
             try {
                 QueryBuilder typeQb = typeDao.queryBuilder();
-                typeQb.where().eq("NAME", "RoadRunner");
+                typeQb.where().eq("NAME", "MegaMillions");
                 QueryBuilder<Pick, Integer> qb = pickDao.queryBuilder();
                 Calendar cutOff = Calendar.getInstance();
-                cutOff.add(Calendar.MONTH, - 1);
+                cutOff.add(Calendar.MONTH, - 3);
                 qb.join(typeQb);
 
                 qb.where().lt("PICKED", cutOff.getTime());
@@ -163,20 +172,21 @@ public class FetchNumbersRR extends AsyncTask<Void, Void, List<Pick>> {
             } catch (SQLException ex) {
                 // ignore
             }
+
         }
     }
 
     private List<Pick> getPicks() {
-        List<String>  strings = new ArrayList<>();
+        List<String> strings = new ArrayList<>();
         OrmHelper helper = null;
 //           LotteryType type = null;
         try {
             helper = ((MainActivity) context).getHelper();
             Dao<LotteryType, Integer> typeDao = helper.getLotteryTypeDao();
-            Dao<Pick,Integer> pickDao = helper.getPickDao();
+            Dao<Pick, Integer> pickDao = helper.getPickDao();
             QueryBuilder<LotteryType, Integer> typeBuilder = typeDao.queryBuilder();
             QueryBuilder<Pick, Integer> pickBuilder = pickDao.queryBuilder();
-            typeBuilder.where().eq("NAME", "RoadRunner");
+            typeBuilder.where().eq("NAME", "MegaMillions");
             pickBuilder.join(typeBuilder);
             pickBuilder.orderBy("PICKED", false);
             List<Pick> picks = pickDao.query(pickBuilder.prepare());
@@ -186,5 +196,4 @@ public class FetchNumbersRR extends AsyncTask<Void, Void, List<Pick>> {
             throw new RuntimeException(ex);
         }
     }
-
 }
