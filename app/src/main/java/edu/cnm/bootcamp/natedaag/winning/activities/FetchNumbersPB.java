@@ -67,7 +67,6 @@ public class FetchNumbersPB extends AsyncTask<Void, Void, List<Pick>> {
             InputStream input = connection.getInputStream();
             ByteArrayOutputStream output = new ByteArrayOutputStream();
             if (connection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                // TODO - Display useful alert to user - e.g. "No network connection"
                 throw new IOException(connection.getResponseMessage());
             }
             byte[] buffer = new byte[BUFFER_SIZE];

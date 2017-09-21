@@ -51,7 +51,6 @@ public class Pick {
 
     private List<PickValue> newValues = null;
 
-    // TODO Add unique constraint for LotteryType id and Picked Date.
     public Pick() {
     }
 

@@ -25,7 +25,7 @@
         android:id="@+id/buttonX1"
         android:layout_width="108dp"
         android:layout_height="60dp"
-        android:text="$ More Winning $"
+        android:text="$ More Jackpots $"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="16dp"
         app:layout_constraintLeft_toLeftOf="parent"
