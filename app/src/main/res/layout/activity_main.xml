@@ -2,6 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="#f5f5f5"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="edu.cnm.bootcamp.natedaag.winning.activities.MainActivity"
@@ -16,6 +17,7 @@
         android:layout_marginEnd="25dp"
         android:layout_marginStart="25dp"
         android:layout_marginTop="8dp"
+        android:background="#f5f5f5"
         app:layout_constraintBottom_toTopOf="@+id/buttonX1"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -31,13 +33,14 @@
     <Button
         style="@style/Widget.AppCompat.Button"
         android:id="@+id/buttonX1"
-        android:layout_width="102dp"
-        android:layout_height="59dp"
+        android:layout_width="108dp"
+        android:layout_height="60dp"
         android:layout_marginEnd="17dp"
-        android:textSize="25sp"
+        android:textSize="35sp"
         android:textStyle="bold"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorPickviewDark"
         android:text="🍀"
+        android:background="@drawable/gold_rectangle"
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintRight_creator="1"
         tools:layout_constraintTop_creator="1"
@@ -54,11 +57,12 @@
     <Button
         android:id="@+id/buttonX5"
         android:layout_width="108dp"
-        android:layout_height="59dp"
-        android:textSize="17sp"
+        android:layout_height="60dp"
+        android:textSize="23sp"
         android:textStyle="bold"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorPickviewDark"
         android:text="🍀🍀🍀🍀🍀"
+        android:background="@drawable/gold_rectangle"
         android:layout_marginEnd="25dp"
         android:layout_marginStart="16dp"
         tools:layout_constraintRight_creator="1"
@@ -72,7 +76,7 @@
         app:layout_constraintHorizontal_bias="0.39"
         app:layout_constraintLeft_toRightOf="@+id/databaseButton"
         />
-    <!--move into body if db button is reinstalled.  app:layout_constraintLeft_toRightOf="@+id/databaseButton"-->
+    <!--move into body if db button is reinstalled:  app:layout_constraintLeft_toRightOf="@+id/databaseButton"-->
 
 
     <Button

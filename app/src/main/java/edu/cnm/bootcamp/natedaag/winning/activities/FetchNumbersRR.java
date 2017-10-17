@@ -52,7 +52,7 @@ public class FetchNumbersRR extends AsyncTask<Void, Void, List<Pick>> {
 
     private ListView listView;
 
-    public FetchNumbersRR(Context context, ListView listView) {
+    FetchNumbersRR(Context context, ListView listView) {
         super();
         this.context = context;
         this.listView = listView;

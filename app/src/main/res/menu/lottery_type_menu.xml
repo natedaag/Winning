@@ -5,15 +5,18 @@
     <group>
     <item
         android:id="@+id/lottery_type_id2"
+        android:textColor="@color/colorPickviewDark"
         android:title="RoadRunner"
         app:showAsAction="collapseActionView" />
     <item
         android:id="@+id/lottery_type_id"
+        android:textColor="@color/colorPickviewDark"
         android:title="PowerBall"
         app:showAsAction="collapseActionView" />
     </group>
     <item
         android:id="@+id/lottery_type_id3"
+        android:textColor="@color/colorPickviewDark"
         android:title="MegaMillions"
         app:showAsAction="collapseActionView" />
 
