@@ -1,8 +1,7 @@
 # Winning
 
-a program that pulls winning roadrunner and powerball from the last (approximately) 30 numbers to its database, and which
-sorts them, and gives back picks that are random, but weighted - hotter numbers are more likely to be picked.  
+While winning lottery numbers are random and impossible to predict, it is our belief that something like patterns develop for certain numbers, which become "hot," and therefore, slightly more likely to be chosen.  It is not likely, however, that ONLY hot numbers will be chosen on a given "pick."  It would be expected that a mix of hot numbers and cool numbers would be the most likely - also, a random combination.
 
-ultimately would prefer to be able to use this for more lotteries.
+The Winning! algorithm is likely to pull hot and cool numbers, but in a random combination, for a pick that is more likely to win.  Winning! pulls winning lottery numbers from the last (approximately) 30 numbers, sorts them, and gives back picks that are random, but weighted - hotter numbers are more likely to be picked.  
 
-also, might like to add features of showing which numbers are hot and which numbers are not - possibly sort for patterns, as well - how many times each number in a set of winning numbers has been picked in the previous 30 days.
+Features to come will be: the display will show which numbers are hot and which numbers are cool.  Also, the ability to set a player's location, so that only relevant lotteries will be shown.
