@@ -2,7 +2,6 @@
 package edu.cnm.bootcamp.natedaag.winning.activities;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,7 +23,6 @@ import edu.cnm.bootcamp.natedaag.winning.R;
 import edu.cnm.bootcamp.natedaag.winning.entities.LotteryType;
 import edu.cnm.bootcamp.natedaag.winning.helpers.AndroidDatabaseManager;
 import edu.cnm.bootcamp.natedaag.winning.helpers.OrmHelper;
-import edu.cnm.bootcamp.natedaag.winning.helpers.PickAdapter;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -92,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
         winningX1Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v3) {
-                Intent testIntent3 = new Intent(MainActivity.this, WinningX1Activity.class)
+                Intent testIntent3 = new Intent(MainActivity.this, GenerateWinning.class)
                         .putExtra(PICKSIZE, 1)
                         .putExtra(LOTTERY_TYPE_ID, type.getId());
                 startActivity(testIntent3);
@@ -103,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         winningX5Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v3) {
-                Intent testIntent3 = new Intent(MainActivity.this, WinningX1Activity.class)
+                Intent testIntent3 = new Intent(MainActivity.this, GenerateWinning.class)
                         .putExtra(PICKSIZE, 5)
                         .putExtra(LOTTERY_TYPE_ID, type.getId());
                 startActivity(testIntent3);
@@ -166,6 +164,21 @@ public class MainActivity extends AppCompatActivity {
             case R.id.lottery_type_id3:
                 ListView listView3 = (ListView) findViewById(R.id.listView);
                 new FetchNumbersMM(this, listView3).execute();
+                try {
+                    Dao<LotteryType, Integer> dao = getHelper().getLotteryTypeDao();
+                    QueryBuilder<LotteryType, Integer> builder = dao.queryBuilder();
+                    builder.where().eq("NAME", item.getTitle());
+                    type = dao.queryForFirst(builder.prepare());
+
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+                setTitle(String.format("%s Jackpot!", item.getTitle()));
+                return true;
+
+            case R.id.lottery_type_id4:
+                ListView listView4 = (ListView) findViewById(R.id.listView);
+                new FetchNumbersLFL(this, listView4).execute();
                 try {
                     Dao<LotteryType, Integer> dao = getHelper().getLotteryTypeDao();
                     QueryBuilder<LotteryType, Integer> builder = dao.queryBuilder();

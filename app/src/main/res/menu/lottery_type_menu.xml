@@ -19,6 +19,11 @@
         android:textColor="@color/colorPickviewDark"
         android:title="MegaMillions"
         app:showAsAction="collapseActionView" />
+    <item
+        android:id="@+id/lottery_type_id4"
+        android:textColor="@color/colorPickviewDark"
+        android:title="LuckyForLife"
+        app:showAsAction="collapseActionView" />
 
 
 </menu>

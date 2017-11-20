@@ -20,7 +20,7 @@
         <activity
             android:name=".helpers.AndroidDatabaseManager"
             android:theme="@style/Theme.AppCompat.Light" />
-        <activity android:name=".activities.WinningX1Activity" />
+        <activity android:name=".activities.GenerateWinning" />
         <activity android:name=".activities.Main2Activity" />
         <activity android:name=".activities.DataEntryActivity"></activity>
     </application>

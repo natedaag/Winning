@@ -83,11 +83,20 @@ public class OrmHelper extends OrmLiteSqliteOpenHelper {
 
         type = new LotteryType();
         type.setName("MegaMillions");
-        type.setSizeOne(75);
+        type.setSizeOne(70);
         type.setDrawOne(5);
-        type.setSizeTwo(15);
+        type.setSizeTwo(25);
         type.setDrawTwo(1);
         getLotteryTypeDao().create(type);
+
+        type = new LotteryType();
+        type.setName("LuckyForLife");
+        type.setSizeOne(48);
+        type.setDrawOne(5);
+        type.setSizeTwo(18);
+        type.setDrawTwo(1);
+        getLotteryTypeDao().create(type);
+
 
 
     }

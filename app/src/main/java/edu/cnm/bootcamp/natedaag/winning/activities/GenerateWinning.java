@@ -29,7 +29,7 @@ import edu.cnm.bootcamp.natedaag.winning.entities.PickValue;
 import edu.cnm.bootcamp.natedaag.winning.helpers.OrmHelper;
 import edu.cnm.bootcamp.natedaag.winning.helpers.PickAdapter;
 
-public class WinningX1Activity extends AppCompatActivity {
+public class GenerateWinning extends AppCompatActivity {
 
 
     private static Random rng = new SecureRandom();
