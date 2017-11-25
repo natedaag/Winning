@@ -15,7 +15,7 @@ public class LotteryType {
     @DatabaseField(columnName = "TYPE_ID", generatedId = true)
     private int id;
 
-    @DatabaseField(canBeNull = false, columnName = "NAME", width = 100) // canBeNull = default - don't need to write
+    @DatabaseField(canBeNull = false, columnName = "NAME", width = 100)
     private String name;
 
     @DatabaseField(canBeNull = false, columnName = "SIZE_ONE")
@@ -24,7 +24,7 @@ public class LotteryType {
     @DatabaseField(canBeNull = false, columnName = "DRAW_ONE")
     private int drawOne;
 
-    @DatabaseField(columnName = "SIZE_TWO", defaultValue = "0")
+    @DatabaseField(columnName = "SIZE_TWO", defaultValue = "0") // canBeNull = default - don't need to write
     private int sizeTwo;
 
     @DatabaseField(columnName = "DRAW_TWO", defaultValue = "0")
