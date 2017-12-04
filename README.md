@@ -1,6 +1,6 @@
 # Winning
 
-This app was created solely for entertainment purposes only.
+This app was created for entertainment purposes only.
 
 While winning lottery numbers are completely random, and therefore, impossible to predict, some numbers seem to come up more - they become “hot.”  For whatever reason, they become more likely to be chosen.  Some of the numbers of this week’s drawings were likely chosen within the last few weeks, and those numbers will turn up again in the next few weeks.  And most numbers will remain “cool” - most numbers of this week’s drawing are more likely to have not been chosen over the last few weeks, and also will not be chosen for the next few.
 
