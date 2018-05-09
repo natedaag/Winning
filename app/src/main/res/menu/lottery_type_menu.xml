@@ -22,7 +22,7 @@
     <item
         android:id="@+id/lottery_type_id4"
         android:textColor="@color/colorPickviewDark"
-        android:title="LuckyForLife"
+        android:title="LottoAmerica"
         app:showAsAction="collapseActionView" />
 
 

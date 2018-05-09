@@ -143,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
-                setTitle(String.format("%s Jackpot!", item.getTitle()));
+                setTitle(String.format("Winning %s!", item.getTitle()));
                 return true;
 
             case R.id.lottery_type_id2:
@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
-                setTitle(String.format("%s Jackpot!", item.getTitle()));
+                setTitle(String.format("Winning %s!", item.getTitle()));
                 return true;
 // added for MM
             case R.id.lottery_type_id3:
@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
-                setTitle(String.format("%s Jackpot!", item.getTitle()));
+                setTitle(String.format("Winning %s!", item.getTitle()));
                 return true;
 
             case R.id.lottery_type_id4:
@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity {
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
-                setTitle(String.format("%s Jackpot!", item.getTitle()));
+                setTitle(String.format("Winning %s!", item.getTitle()));
                 return true;
 
             default:

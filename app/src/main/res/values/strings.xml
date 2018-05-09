@@ -1,8 +1,9 @@
 <resources>
     <string name="app_name">WINNING!</string>
     <string name="roadrunner_url">http://nmlotterydynamic.sks.com/rts/games/pastdrawings/csv/?game=roadrunnercash</string>
-    <string name="powerball_url">http://www.powerball.com/powerball/winnums-text.txt</string>
+    <string name="powerball_url">https://www.ialottery.com/Pages/ResultsTxt/power.txt</string>
     <string name="megamillions_url">https://data.ny.gov/resource/h6w8-42p9.csv</string>
-    <string name="luckyforlife_url">https://www.ialottery.com/Pages/ResultsTxt/LuckyForLife.txt</string>
+    <string name="lottoamerica_url">https://www.ialottery.com/Pages/ResultsTxt/LA.txt</string>
     <string name="WinningW_url">http://www.drodd.com/images14/w10.png</string>
+
 </resources>

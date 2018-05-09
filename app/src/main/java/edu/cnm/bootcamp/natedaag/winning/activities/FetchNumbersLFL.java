@@ -62,7 +62,7 @@ public class FetchNumbersLFL extends AsyncTask<Void, Void, List<Pick>> {
         List<String> rows = null;
         HttpURLConnection connection = null;
         try {
-            URL url = new URL(context.getString(R.string.luckyforlife_url));
+            URL url = new URL(context.getString(R.string.lottoamerica_url));
             connection = (HttpURLConnection) url.openConnection();
             InputStream input = connection.getInputStream();
             ByteArrayOutputStream output = new ByteArrayOutputStream();
