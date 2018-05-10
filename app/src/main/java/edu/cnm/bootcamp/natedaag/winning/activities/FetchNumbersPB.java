@@ -129,7 +129,7 @@ public class FetchNumbersPB extends AsyncTask<Void, Void, List<Pick>> {
                         Pick pick = new Pick();
                         pick.setLotteryType(type);
                         pick.setHistorical(true);
-                        pick.setPicked(new SimpleDateFormat("MM/dd/yyyy").parse(columns[0]));
+                        pick.setPicked(new SimpleDateFormat("MM-dd-yyyy").parse(columns[0]));
                         pickDao = helper.getPickDao();
                         pickDao.create(pick);
                         valueDao = helper.getPickValueDao();

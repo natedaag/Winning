@@ -48,6 +48,7 @@ public class FetchNumbersMM extends AsyncTask<Void, Void, List<Pick>> {
     private static final int MAX_DAYS = 35;
 
     private Context context;
+
     private ListView listView;
 
     public FetchNumbersMM(Context context, ListView listView) {
@@ -61,7 +62,7 @@ public class FetchNumbersMM extends AsyncTask<Void, Void, List<Pick>> {
         List<String> rows = null;
         HttpURLConnection connection = null;
         try {
-            URL url = new URL(context.getString(R.string.megamillions_url));
+            URL url = new URL(context.getString(R.string.megamillions_url_2));
             connection = (HttpURLConnection) url.openConnection();
             InputStream input = connection.getInputStream();
             ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -106,6 +107,7 @@ public class FetchNumbersMM extends AsyncTask<Void, Void, List<Pick>> {
             Dao<Pick, Integer> pickDao = null;
             Dao<PickValue, Integer> valueDao = null;
             Dao<LotteryType, Integer> typeDao = null;
+
             try {
                 helper = ((MainActivity) context).getHelper();
                 typeDao = helper.getLotteryTypeDao();
@@ -119,32 +121,34 @@ public class FetchNumbersMM extends AsyncTask<Void, Void, List<Pick>> {
             int counter = 0;
             String line = reader.readLine();                        // eat header line
             while ((line = reader.readLine()) != null && counter++ < MAX_DAYS) {
-                line = line.replaceAll("^\\s*\"\\s*|\\s*\"\\s*$", "");
-                String[] columns = line.split("\\s*\"\\s*,\\s*\"\\s*|\\s+");
+                String[] columns = line.split("\\s+");
+                String row = "";
                 if (columns.length > 2) {
 
                     try {
                         Pick pick = new Pick();
                         pick.setLotteryType(type);
                         pick.setHistorical(true);
-                        pick.setPicked(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss").parse(columns[0]));
+                        pick.setPicked(new SimpleDateFormat("MM-dd-yyyy").parse(columns[0]));
                         pickDao = helper.getPickDao();
                         pickDao.create(pick);
                         valueDao = helper.getPickValueDao();
 // to get white balls
-                        for (int i = 3; i < columns.length; ++i) {
+                        for (int i = 1; i < columns.length - 2; ++i) {
+//                          row += columns[i] + "          ";
                             PickValue value = new PickValue();
                             value.setPick(pick);
                             value.setValue(Integer.parseInt(columns[i]));
                             value.setSequence(1);
                             valueDao.create(value);
                         }
-// to get megaballs
+// to get powerballs
                         PickValue value = new PickValue();
                         value.setPick(pick);
-                        value.setValue(Integer.parseInt(columns[1]));
+                        value.setValue(Integer.parseInt(columns[columns.length - 2]));
                         value.setSequence(2);
                         valueDao.create(value);
+//                      strings.add(row);
 
 
                     } catch (ParseException ex) {
